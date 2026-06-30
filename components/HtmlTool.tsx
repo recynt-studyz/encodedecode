@@ -114,10 +114,9 @@ function encodeHtml(str: string, entityMode: EntityMode): string {
 }
 
 function decodeHtml(str: string): string {
-  // Use textarea trick for safe decoding
-  const ta = document.createElement('textarea')
-  ta.innerHTML = str
-  return ta.value
+  const div = document.createElement('div')
+  div.innerHTML = str
+  return div.textContent ?? ''
 }
 
 export default function HtmlTool() {

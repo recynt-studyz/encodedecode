@@ -10,6 +10,7 @@ const MIME_LABELS: Record<string, string> = {
   'image/webp': 'WebP',
   'image/svg+xml': 'SVG',
   'image/bmp': 'BMP',
+  'image/x-icon': 'ICO',
   'image/ico': 'ICO',
 }
 
@@ -20,19 +21,26 @@ const MIME_EXT: Record<string, string> = {
   'image/webp': 'webp',
   'image/svg+xml': 'svg',
   'image/bmp': 'bmp',
+  'image/x-icon': 'ico',
   'image/ico': 'ico',
 }
 
 function detectMimeFromBase64(b64: string): string | null {
   try {
-    const sample = atob(b64.slice(0, 16).replace(/-/g, '+').replace(/_/g, '/').padEnd(Math.ceil(b64.slice(0, 16).length / 4) * 4, '='))
-    const bytes = Array.from(sample).map((c) => c.charCodeAt(0))
-    if (bytes[0] === 0x89 && bytes[1] === 0x50 && bytes[2] === 0x4e && bytes[3] === 0x47) return 'image/png'
-    if (bytes[0] === 0xff && bytes[1] === 0xd8 && bytes[2] === 0xff) return 'image/jpeg'
+    // Decode enough bytes to cover WebP "WEBP" signature at offset 8–11 (~15 bytes needed)
+    // Use 52 chars (multiple of 4) → 39 decoded bytes
+    const raw = b64.slice(0, 52).replace(/-/g, '+').replace(/_/g, '/')
+    const padded = raw.padEnd(Math.ceil(raw.length / 4) * 4, '=')
+    const binary = atob(padded)
+    const bytes = Array.from(binary).map((c) => c.charCodeAt(0))
+    if (bytes[0] === 0xFF && bytes[1] === 0xD8) return 'image/jpeg'
+    if (bytes[0] === 0x89 && bytes[1] === 0x50 && bytes[2] === 0x4E && bytes[3] === 0x47) return 'image/png'
     if (bytes[0] === 0x47 && bytes[1] === 0x49 && bytes[2] === 0x46) return 'image/gif'
-    if (bytes[0] === 0x52 && bytes[1] === 0x49 && bytes[2] === 0x46 && bytes[3] === 0x46) return 'image/webp'
-    if (bytes[0] === 0x3c && (bytes[1] === 0x73 || bytes[1] === 0x3f || bytes[1] === 0x21)) return 'image/svg+xml'
-    if (bytes[0] === 0x42 && bytes[1] === 0x4d) return 'image/bmp'
+    // WebP: RIFF....WEBP — check "WEBP" identifier at bytes 8–11
+    if (bytes[8] === 0x57 && bytes[9] === 0x45 && bytes[10] === 0x42 && bytes[11] === 0x50) return 'image/webp'
+    if (bytes[0] === 0x3C && (bytes[1] === 0x73 || bytes[1] === 0x3F || bytes[1] === 0x21)) return 'image/svg+xml'
+    if (bytes[0] === 0x42 && bytes[1] === 0x4D) return 'image/bmp'
+    if (bytes[0] === 0x00 && bytes[1] === 0x00 && bytes[2] === 0x01 && bytes[3] === 0x00) return 'image/x-icon'
   } catch { /* ignore */ }
   return null
 }
