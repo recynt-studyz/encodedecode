@@ -10,6 +10,11 @@ const tools = [
   { href: '/html', label: 'HTML' },
   { href: '/jwt', label: 'JWT' },
   { href: '/hash', label: 'Hash' },
+  { href: '/base64-to-image', label: '→Img' },
+  { href: '/image-to-base64', label: 'Img→' },
+  { href: '/morse', label: 'Morse' },
+  { href: '/binary', label: 'Binary' },
+  { href: '/rot13', label: 'ROT13' },
 ]
 
 export default function ToolNav() {
