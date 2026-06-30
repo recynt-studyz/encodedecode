@@ -26,48 +26,31 @@ const MIME_EXT: Record<string, string> = {
 }
 
 function detectMimeFromBase64(b64: string): string | null {
-  try {
-    // Decode enough bytes to cover WebP "WEBP" signature at offset 8–11 (~15 bytes needed)
-    // Use 48 chars (multiple of 4) → 36 decoded bytes
-    const raw = b64.slice(0, 48).replace(/-/g, '+').replace(/_/g, '/')
-    const padded = raw.padEnd(Math.ceil(raw.length / 4) * 4, '=')
-    const binary = atob(padded)
-    const bytes = Array.from(binary).map((c) => c.charCodeAt(0))
-    console.log('[B64->Img] Decoded magic bytes (hex):', bytes.slice(0, 12).map(b => b.toString(16).padStart(2, '0')).join(' '))
-    if (bytes[0] === 0xFF && bytes[1] === 0xD8) return 'image/jpeg'
-    if (bytes[0] === 0x89 && bytes[1] === 0x50 && bytes[2] === 0x4E && bytes[3] === 0x47) return 'image/png'
-    if (bytes[0] === 0x47 && bytes[1] === 0x49 && bytes[2] === 0x46) return 'image/gif'
-    // WebP: RIFF....WEBP — check "WEBP" identifier at bytes 8–11
-    if (bytes[8] === 0x57 && bytes[9] === 0x45 && bytes[10] === 0x42 && bytes[11] === 0x50) return 'image/webp'
-    if (bytes[0] === 0x3C && (bytes[1] === 0x73 || bytes[1] === 0x3F || bytes[1] === 0x21)) return 'image/svg+xml'
-    if (bytes[0] === 0x42 && bytes[1] === 0x4D) return 'image/bmp'
-    if (bytes[0] === 0x00 && bytes[1] === 0x00 && bytes[2] === 0x01 && bytes[3] === 0x00) return 'image/x-icon'
-    console.log('[B64->Img] No magic byte pattern matched')
-  } catch (e) {
-    console.log('[B64->Img] atob() threw:', e instanceof Error ? e.message : String(e))
-  }
+  // Check the base64 prefix directly — magic bytes always encode to the same prefix.
+  // This avoids any atob() environment inconsistencies.
+  if (b64.startsWith('/9j/')) return 'image/jpeg'                              // FF D8 FF
+  if (b64.startsWith('iVBOR')) return 'image/png'                               // 89 50 4E 47
+  if (b64.startsWith('R0lGO')) return 'image/gif'                               // 47 49 46 38
+  if (b64.startsWith('UklGR')) return 'image/webp'                              // 52 49 46 46 (RIFF/WebP)
+  if (b64.startsWith('PHN2') || b64.startsWith('PD94') || b64.startsWith('PCFE')) return 'image/svg+xml' // <svg / <?xml / <!D
+  if (b64.startsWith('Qk')) return 'image/bmp'                                  // 42 4D (BM)
+  if (b64.startsWith('AAAB')) return 'image/x-icon'                             // 00 00 01 00
   return null
 }
 
 function buildDataUrl(input: string): { dataUrl: string; mime: string } | null {
   const trimmed = input.trim().replace(/\s/g, '')
-  console.log('[B64->Img] Raw input length:', input.length, '| Cleaned length:', trimmed.length)
-  console.log('[B64->Img] Cleaned prefix (50 chars):', trimmed.slice(0, 50))
   if (!trimmed) return null
 
   // Already a data URL
   if (trimmed.startsWith('data:image')) {
-    console.log('[B64->Img] Detected as data URL')
     const match = trimmed.match(/^data:(image\/[^;]+);base64,(.+)$/)
     if (match) return { dataUrl: trimmed, mime: match[1] }
-    console.log('[B64->Img] data URL regex did not match — malformed?')
     return null
   }
 
-  // Raw base64 — detect mime from bytes
-  console.log('[B64->Img] Treating as raw base64 — running magic byte detection')
+  // Raw base64 — detect mime from prefix
   const mime = detectMimeFromBase64(trimmed)
-  console.log('[B64->Img] Detected mime type:', mime)
   if (!mime) return null
   return { dataUrl: `data:${mime};base64,${trimmed}`, mime }
 }
@@ -96,7 +79,6 @@ export default function Base64ToImageTool() {
         return
       }
       const result = buildDataUrl(trimmed)
-      console.log('[B64->Img] buildDataUrl result:', result ? `mime=${result.mime}, dataUrl length=${result.dataUrl.length}` : 'null')
       if (!result) {
         setDataUrl(null); setMime(null); setDimensions(null)
         setError("This doesn't appear to be a valid Base64 image. Make sure you're pasting image data, not encoded text.")
@@ -109,7 +91,6 @@ export default function Base64ToImageTool() {
       const img = new Image()
       img.onload = () => setDimensions({ w: img.naturalWidth, h: img.naturalHeight })
       img.onerror = () => {
-        console.log('[B64->Img] img.onerror fired — browser rejected the data URL (mime/data mismatch or corrupt data)')
         setDataUrl(null); setMime(null)
         setError("This doesn't appear to be a valid Base64 image. Make sure you're pasting image data, not encoded text.")
       }
