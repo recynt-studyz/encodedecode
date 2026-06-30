@@ -68,6 +68,7 @@ export default function ImageToBase64Page() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppSchema).replace(/</g, '\\u003c') }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema).replace(/</g, '\\u003c') }} />
 
+      <h1 className="sr-only">Image to Base64 Converter — Free Online Tool</h1>
       <ImageToBase64Wrapper />
 
       <section className="bg-white dark:bg-[#0f172a]">

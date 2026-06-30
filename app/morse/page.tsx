@@ -68,6 +68,7 @@ export default function MorsePage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppSchema).replace(/</g, '\\u003c') }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema).replace(/</g, '\\u003c') }} />
 
+      <h1 className="sr-only">Morse Code Translator — Text to Morse Code Online</h1>
       <MorseWrapper />
 
       <section className="bg-white dark:bg-[#0f172a]">
@@ -79,7 +80,8 @@ export default function MorsePage() {
               <p className="text-sm text-blue-800 dark:text-blue-400 leading-relaxed">
                 This free online morse code translator converts text to morse code and back instantly. Unlike text-only tools,
                 it plays the actual Morse code audio using the Web Audio API — 600 Hz sine tones with smooth onset and offset
-                to eliminate clicks. Useful for learning Morse code, amateur radio practice, or just having fun.
+                to eliminate clicks. Useful for learning Morse code, amateur radio practice, or just having fun. All translation
+                and audio generation runs in your browser — no data is sent to any server.
               </p>
             </div>
           </div>

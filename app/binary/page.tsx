@@ -68,6 +68,7 @@ export default function BinaryPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppSchema).replace(/</g, '\\u003c') }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema).replace(/</g, '\\u003c') }} />
 
+      <h1 className="sr-only">Binary &amp; Hex Converter — Text to Binary Online</h1>
       <BinaryWrapper />
 
       <section className="bg-white dark:bg-[#0f172a]">

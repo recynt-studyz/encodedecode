@@ -84,6 +84,7 @@ export default function Home() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppSchema).replace(/</g, '\\u003c') }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema).replace(/</g, '\\u003c') }} />
 
+      <h1 className="sr-only">Base64 Encode / Decode — Free, Instant, Private</h1>
       <Base64Wrapper />
 
       <section className="bg-white dark:bg-[#0f172a]">

@@ -72,6 +72,7 @@ export default function HashPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppSchema).replace(/</g, '\\u003c') }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema).replace(/</g, '\\u003c') }} />
 
+      <h1 className="sr-only">Hash Generator — MD5, SHA-1, SHA-256, SHA-512 Online</h1>
       <HashWrapper />
 
       <section className="bg-white dark:bg-[#0f172a]">
@@ -79,7 +80,17 @@ export default function HashPage() {
           <div className="pb-2">
             <AdBanner slot="9999999999" />
           </div>
-          <div className="max-w-3xl mx-auto pb-10 pt-4">
+          <div className="max-w-3xl mx-auto pb-8 pt-4">
+            <div className="rounded-2xl bg-blue-50 dark:bg-blue-950/30 border border-blue-100 dark:border-blue-900/50 px-6 py-5">
+              <h2 className="text-base font-bold text-blue-900 dark:text-blue-300 mb-2">md5 sha256 hash generator — instant, client-side</h2>
+              <p className="text-sm text-blue-800 dark:text-blue-400 leading-relaxed">
+                This online hash generator computes MD5, SHA-1, SHA-256, and SHA-512 hashes instantly as you type. MD5 uses a
+                pure-JavaScript implementation; SHA hashes use the native Web Crypto API. Drop any file to hash it — no upload,
+                no server. All hashing runs entirely in your browser.
+              </p>
+            </div>
+          </div>
+          <div className="max-w-3xl mx-auto pb-10">
             <FAQ questions={faqs} />
           </div>
           <div className="max-w-3xl mx-auto pb-6">

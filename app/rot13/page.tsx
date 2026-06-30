@@ -68,6 +68,7 @@ export default function Rot13Page() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppSchema).replace(/</g, '\\u003c') }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema).replace(/</g, '\\u003c') }} />
 
+      <h1 className="sr-only">ROT13 &amp; Caesar Cipher Encoder — Free Online Tool</h1>
       <Rot13Wrapper />
 
       <section className="bg-white dark:bg-[#0f172a]">

@@ -72,6 +72,7 @@ export default function JwtPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppSchema).replace(/</g, '\\u003c') }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema).replace(/</g, '\\u003c') }} />
 
+      <h1 className="sr-only">JWT Decoder — Decode JSON Web Tokens Online</h1>
       <JwtWrapper />
 
       <section className="bg-white dark:bg-[#0f172a]">
@@ -79,7 +80,19 @@ export default function JwtPage() {
           <div className="pb-2">
             <AdBanner slot="7777777777" />
           </div>
-          <div className="max-w-3xl mx-auto pb-10 pt-4">
+          <div className="max-w-3xl mx-auto pb-8 pt-4">
+            <div className="rounded-2xl bg-blue-50 dark:bg-blue-950/30 border border-blue-100 dark:border-blue-900/50 px-6 py-5">
+              <h2 className="text-base font-bold text-blue-900 dark:text-blue-300 mb-2">jwt decoder online — inspect tokens instantly</h2>
+              <p className="text-sm text-blue-800 dark:text-blue-400 leading-relaxed">
+                This jwt decoder online tool decodes JSON Web Tokens directly in your browser. Paste any JWT starting with
+                <code className="font-mono text-xs"> eyJ</code> to see the decoded header, payload, and expiry status. Timestamps
+                for <code className="font-mono text-xs">iat</code>, <code className="font-mono text-xs">exp</code>, and{' '}
+                <code className="font-mono text-xs">nbf</code> are shown in human-readable format. Your token never leaves your
+                device — zero outbound requests.
+              </p>
+            </div>
+          </div>
+          <div className="max-w-3xl mx-auto pb-10">
             <FAQ questions={faqs} />
           </div>
           <div className="max-w-3xl mx-auto pb-6">

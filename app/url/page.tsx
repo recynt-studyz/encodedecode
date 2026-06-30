@@ -72,6 +72,7 @@ export default function UrlPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppSchema).replace(/</g, '\\u003c') }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema).replace(/</g, '\\u003c') }} />
 
+      <h1 className="sr-only">URL Encode / Decode — Free Online URL Encoder Decoder</h1>
       <UrlWrapper />
 
       <section className="bg-white dark:bg-[#0f172a]">
@@ -79,7 +80,18 @@ export default function UrlPage() {
           <div className="pb-2">
             <AdBanner slot="3333333333" />
           </div>
-          <div className="max-w-3xl mx-auto pb-10 pt-4">
+          <div className="max-w-3xl mx-auto pb-8 pt-4">
+            <div className="rounded-2xl bg-blue-50 dark:bg-blue-950/30 border border-blue-100 dark:border-blue-900/50 px-6 py-5">
+              <h2 className="text-base font-bold text-blue-900 dark:text-blue-300 mb-2">url encode decode online — instant percent-encoding</h2>
+              <p className="text-sm text-blue-800 dark:text-blue-400 leading-relaxed">
+                This url encoder decoder converts text to percent-encoded format and back in real time using native
+                <code className="font-mono text-xs"> encodeURIComponent</code> and <code className="font-mono text-xs">decodeURIComponent</code>.
+                Use Component mode for individual query parameter values, or Full URL mode to encode a complete URL while preserving
+                its structure. All processing runs in your browser — no data is sent to any server.
+              </p>
+            </div>
+          </div>
+          <div className="max-w-3xl mx-auto pb-10">
             <FAQ questions={faqs} />
           </div>
           <div className="max-w-3xl mx-auto pb-6">

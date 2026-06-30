@@ -9,7 +9,7 @@ export default function Footer() {
   return (
     <footer className="border-t border-gray-100 dark:border-gray-800 py-6 mt-12">
       <p className="text-center text-xs text-gray-400 mb-3 px-4">
-        Free online encoder and decoder tools for developers. Base64, URL, HTML, JWT and Hash. No signup, no upload.
+        Free online developer tools: Base64, URL, HTML, JWT, Hash, Morse, Binary, ROT13, Regex, Cron, Color, and more. No signup, no upload.
       </p>
       <div className="max-w-3xl mx-auto px-4 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs text-gray-400">
         <span className="font-mono">encodedecode.app</span>

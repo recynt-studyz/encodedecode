@@ -72,6 +72,7 @@ export default function HtmlPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppSchema).replace(/</g, '\\u003c') }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema).replace(/</g, '\\u003c') }} />
 
+      <h1 className="sr-only">HTML Encode / Decode — HTML Entity Converter Online</h1>
       <HtmlWrapper />
 
       <section className="bg-white dark:bg-[#0f172a]">
@@ -79,7 +80,17 @@ export default function HtmlPage() {
           <div className="pb-2">
             <AdBanner slot="5555555555" />
           </div>
-          <div className="max-w-3xl mx-auto pb-10 pt-4">
+          <div className="max-w-3xl mx-auto pb-8 pt-4">
+            <div className="rounded-2xl bg-blue-50 dark:bg-blue-950/30 border border-blue-100 dark:border-blue-900/50 px-6 py-5">
+              <h2 className="text-base font-bold text-blue-900 dark:text-blue-300 mb-2">html entity encoder decoder — instant conversion</h2>
+              <p className="text-sm text-blue-800 dark:text-blue-400 leading-relaxed">
+                This html encoder decoder converts special characters to HTML entities (&amp;amp;, &amp;lt;, &amp;gt;, &amp;quot;)
+                and back. Choose from basic, extended, or numeric entity modes. Essential for preventing XSS and safely displaying
+                user-generated content in HTML pages. All processing runs in your browser — no data is sent to any server.
+              </p>
+            </div>
+          </div>
+          <div className="max-w-3xl mx-auto pb-10">
             <FAQ questions={faqs} />
           </div>
           <div className="max-w-3xl mx-auto pb-6">
