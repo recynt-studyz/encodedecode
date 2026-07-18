@@ -72,6 +72,35 @@ export default function Rot13Page() {
       <Rot13Wrapper />
 
       <section className="bg-white dark:bg-[#0f172a]">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 pt-10 pb-4 space-y-10">
+          <div>
+            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">How ROT13 and Caesar Ciphers Work</h2>
+            <div className="space-y-3 text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+              <p>ROT13 is a special case of the Caesar cipher — a substitution cipher named after Julius Caesar, who reportedly used a shift of 3 positions to protect military communications. In a Caesar cipher, each letter in the plaintext is replaced by the letter a fixed number of positions further along the alphabet. With a shift of 3, A becomes D, B becomes E, and Z wraps around to C. The cipher is symmetric: to decrypt, shift in the opposite direction by the same amount.</p>
+              <p>ROT13 specifically uses a shift of 13. The English alphabet has 26 letters, so a shift of 13 lands exactly halfway around the circle. This means applying ROT13 twice returns the original text — ROT13 is its own inverse. There is no separate encode and decode operation; the same transformation does both. This elegant property makes ROT13 uniquely convenient: one button, no key to remember, perfect reversibility. The cipher affects only letters and preserves their case. Digits, spaces, punctuation, and non-Latin characters pass through unchanged.</p>
+              <p>The cipher has a long history of casual internet use for hiding content that someone might prefer to read only intentionally. Online communities have used it since the early Usenet days to hide puzzle answers, movie spoilers, offensive jokes, and punchlines. Because the encoding pattern is visually distinctive — every word looks like scrambled letters of a similar length — readers immediately recognize encoded text and know they can decode it if they choose to.</p>
+            </div>
+          </div>
+          <div>
+            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">A Worked Example: Hiding a Spoiler</h2>
+            <div className="space-y-3 text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+              <p>A film discussion forum wants to allow users to post spoilers without ruining the experience for others who have not yet seen the movie. A user wants to share: <em>The butler did it. He framed the detective in the final scene.</em></p>
+              <p>After ROT13 encoding: <em>Gur ohgyre qvq vg. Ur senzrq gur qrgrpgvir va gur svany fprar.</em> The encoded text is clearly altered — any reader recognizes it as ROT13, so no one will accidentally read the spoiler. Anyone who wants to read it can decode it in one click. The casual reader is protected; the curious reader is not blocked.</p>
+              <p>To trace the rotation letter by letter: T (position 19) + 13 = 32, which wraps to 6 → G. H + 13 = U. E + 13 = R. The word <em>The</em> becomes <em>Gur</em>. Similarly, <em>butler</em> becomes <em>ohgyre</em> and <em>did</em> becomes <em>qvq</em>. Paste <em>The butler did it</em> into the encoder above to see every rotation in real time, then paste the result back to confirm ROT13&apos;s self-reversing property.</p>
+            </div>
+          </div>
+          <div>
+            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Caesar Cipher Variants and ROT13&apos;s Limits</h2>
+            <div className="space-y-3 text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+              <p><strong>ROT13 provides no security.</strong> It is a single, publicly documented transformation with no key and no variation. Anyone who recognizes ROT13 text — which is visually distinctive — can decode it instantly using any ROT13 tool. It is a casual obfuscation technique for spoilers, hints, and puzzle answers, not a privacy or security measure. For actual content protection, use properly authenticated encryption.</p>
+              <p><strong>The full range of Caesar cipher shifts</strong> (ROT1 through ROT25) is available in the Caesar cipher tab. Each shift value is a different cipher. ROT13 is the most common because it is self-reversing. ROT1 and ROT25 are each other&apos;s inverse. ROT3 is the historical Caesar cipher. ROT47 is a variant that extends the rotation to include digits and punctuation (printable ASCII from ! to ~, a range of 94 characters), sometimes used in a similar casual obfuscation context.</p>
+              <p><strong>Non-Latin alphabets</strong> are not affected by ROT13. Russian, Arabic, Chinese, Japanese, Korean, and other non-Latin scripts pass through the cipher unchanged, because ROT13 is defined only for the 26 letters of the Latin alphabet. For languages that use Latin characters with diacritical marks (é, ü, ñ, etc.), those extended characters also pass through unchanged — only the plain A–Z letters rotate.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-white dark:bg-[#0f172a]">
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6">
           <div className="pb-2"><AdBanner slot="5060708090" /></div>
           <div className="max-w-3xl mx-auto pb-8 pt-4">

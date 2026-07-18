@@ -76,6 +76,34 @@ export default function HashPage() {
       <HashWrapper />
 
       <section className="bg-white dark:bg-[#0f172a]">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 pt-10 pb-4 space-y-10">
+          <div>
+            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">How Hash Functions Work</h2>
+            <div className="space-y-3 text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+              <p>A cryptographic hash function takes input data of any size and produces a fixed-length output called a digest or hash. Hash functions have three essential properties. First, they are deterministic: the same input always produces the same output. Second, they are one-way: given a hash, it is computationally infeasible to reconstruct the original input. Third, they exhibit the avalanche effect: a single bit change in the input produces a completely different hash, making it impossible to infer anything about the input by comparing two hashes.</p>
+              <p>MD5 produces a 128-bit (32 hex character) hash and was once widely used for security purposes. It is now cryptographically broken — researchers have demonstrated practical MD5 collision attacks where two different inputs produce the same hash. MD5 remains useful for non-security purposes like file deduplication and checksums, but must not be used for passwords, digital signatures, or any security-sensitive application. SHA-1 (160-bit, 40 hex characters) was deprecated for security use after the 2017 SHAttered collision attack.</p>
+              <p>SHA-256 (256-bit, 64 hex characters), part of the SHA-2 family, is the current standard for security-sensitive hashing. SHA-512 (512-bit, 128 hex characters) offers a larger safety margin for long-term security needs. Both use the native Web Crypto API in this tool, which provides hardware-accelerated computation where supported. Common use cases include file integrity verification, digital signatures, password storage (with proper salting), and data fingerprinting.</p>
+            </div>
+          </div>
+          <div>
+            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">A Worked Example: File Integrity and Password Storage</h2>
+            <div className="space-y-3 text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+              <p>A developer publishes a software release and wants to let users verify the download has not been tampered with. She computes the SHA-256 hash of the installer file and publishes it alongside the download link. Users download the file, compute its SHA-256 hash locally, and compare. If the hashes match exactly — all 64 hex characters — the file is authentic and unmodified. If even a single byte was changed by a malicious actor or corrupted during download, the hash would be completely different. This is how Linux distributions, package managers, and security-conscious software projects publish checksums.</p>
+              <p>For password storage, the same one-way property is critical. When a user creates an account with a password, the server computes its hash and stores only the hash — never the plain text. When the user logs in, the server hashes the submitted password and compares to the stored hash. Even if an attacker steals the database, they have hashes, not passwords. To illustrate the avalanche effect: hash <em>password123</em> and <em>password124</em> — the SHA-256 outputs share no visible similarity despite differing by one character. This makes it impossible to guess partial passwords from partial hash matches.</p>
+            </div>
+          </div>
+          <div>
+            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Salting, Rainbow Tables, and Password Hashing Functions</h2>
+            <div className="space-y-3 text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+              <p><strong>Rainbow tables</strong> are precomputed dictionaries that map common passwords to their hashes. An attacker with a stolen database of plain SHA-256 password hashes can look up each hash in a rainbow table and recover the password in milliseconds — no brute-force required. Salting defeats this: a unique random value (the salt) is appended to each password before hashing, so the same password hashes differently for each user, invalidating any precomputed table.</p>
+              <p><strong>Dedicated password hashing functions</strong> — bcrypt, scrypt, and Argon2 — are specifically designed for password storage and should be used instead of general-purpose hash functions like SHA-256. They are intentionally slow and memory-intensive, making brute-force attacks expensive. A single bcrypt hash may take 100 milliseconds to compute. SHA-256 on a GPU can compute billions of hashes per second; bcrypt reduces that to thousands. The computational cost is configurable via a work factor that can be increased as hardware improves.</p>
+              <p><strong>HMAC</strong> (Hash-based Message Authentication Code) combines a hash function with a shared secret key to authenticate messages. HMAC-SHA256 is how JWT tokens signed with the HS256 algorithm are created — the signature proves both that the payload was not altered and that it was created by someone with the secret key. File download verification, API request signing, and webhook payload validation all commonly use HMAC.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-white dark:bg-[#0f172a]">
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6">
           <div className="pb-2">
             <AdBanner slot="9999999999" />
